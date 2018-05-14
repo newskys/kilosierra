@@ -3,7 +3,6 @@ package com.example.controller;
 import com.example.dao.HelloDAO;
 import com.example.model.Hello;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -23,11 +22,19 @@ public class HelloController {
     }
 
     @RequestMapping("/list")
-    public List<Hello> list(Model model) {
+    public List<Hello> list() {
 
         List<Hello> helloList = helloDAO.findAll();
 
         return helloList;
+    }
+
+    @RequestMapping("/select")
+    public Hello list(String name) {
+
+        Hello hello = helloDAO.select(name);
+
+        return hello;
     }
 
     @RequestMapping("/")
