@@ -6,10 +6,11 @@
 </head>
 <body>
 Login Please.
-<form name="login" action="/login/submit" method="post">
-    <input id="userId" name="userId" placeholder="id" type="text" />
-    <input id="userPassword" name="userPassword" placeholder="password" type="password" />
-    <button id="userLogin" name="userLogin" type="submit">login!</button>
+<form name="login"<%-- action="/login/submit?${_csrf.parameterName}=${_csrf.token}"--%> method="post">
+    <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
+    <input id="userId" name="username" placeholder="id" type="text" />
+    <input id="password" name="password" placeholder="password" type="password" />
+    <button id="login" name="login" type="submit">login!</button>
 </form>
 </body>
 </html>

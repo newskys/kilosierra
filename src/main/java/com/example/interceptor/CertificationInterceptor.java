@@ -7,7 +7,6 @@ import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 @Component
 @Slf4j
@@ -15,17 +14,17 @@ public class CertificationInterceptor implements HandlerInterceptor {
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
             throws Exception {
-        HttpSession session = request.getSession();
-        Boolean loginVO = (Boolean) session.getAttribute("loginUser");
-
-        if (loginVO == null || !loginVO) {
-            log.debug("login failed");
-            response.sendRedirect("/login/index");
-            return false;
-        } else {
-            session.setMaxInactiveInterval(30 * 60);
+//        HttpSession session = request.getSession();
+//        Boolean loginVO = (Boolean) session.getAttribute("loginUser");
+//
+//        if (loginVO == null || !loginVO) {
+//            log.debug("login failed");
+//            response.sendRedirect("/login/index");
+//            return false;
+//        } else {
+//            session.setMaxInactiveInterval(30 * 60);
             return true;
-        }
+//        }
     }
 
     @Override
