@@ -7,6 +7,7 @@ public class CustomLoginSuccessHandler extends SavedRequestAwareAuthenticationSu
         setDefaultTargetUrl(defaultTargetUrl);
     }
 
+    // 로그인 성공 후 직전 페이지로 돌아가기
 //    @Override
 //    public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response,
 //                                        Authentication authentication) throws ServletException, IOException {
