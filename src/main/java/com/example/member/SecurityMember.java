@@ -16,8 +16,8 @@ import java.util.List;
 public class SecurityMember extends User {
     private static final long serialVersionUID = 3382944892218208166L;
 
-    public SecurityMember(MemberDO memberDO) {
-        super(memberDO.getUserId(), memberDO.getPassword(), makeGrantedAuthority(memberDO.getRoleType()));
+    public SecurityMember(Member member) {
+        super(member.getUserId(), member.getPassword(), makeGrantedAuthority(member.getRoleType()));
     }
 
     private static Collection<? extends GrantedAuthority> makeGrantedAuthority(int roleType) {

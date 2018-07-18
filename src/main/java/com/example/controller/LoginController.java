@@ -1,6 +1,6 @@
 package com.example.controller;
 
-import com.example.member.MemberRepository;
+import com.example.member.MemberService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -12,13 +12,12 @@ import org.springframework.web.servlet.view.RedirectView;
 import javax.servlet.http.HttpServletRequest;
 
 @Controller
-@RequestMapping("/login")
 @Slf4j
 public class LoginController {
     @Autowired
-    MemberRepository memberRepository;
+    MemberService memberService;
 
-    @RequestMapping("/index")
+    @RequestMapping("/login")
     ModelAndView login(HttpServletRequest req) {
 //        String referer = req.getHeader("Referer");
 //        req.getSession().setAttribute("prevPage", referer);
@@ -43,7 +42,7 @@ public class LoginController {
 //        return "login";
 //    }
 
-    @GetMapping(value = "/register")
+    @GetMapping(value = "/login/register")
     ModelAndView register() {
         return new ModelAndView("register");
     }
@@ -52,7 +51,7 @@ public class LoginController {
 //    ModelAndView register(String username, String password, String email) {
 //        BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 //
-//        MemberDO memberDO = new MemberDO();
+//        Member memberDO = new Member();
 //        memberDO.setPassword(passwordEncoder.encode(password));
 //        memberDO.setEmail(email);
 //        memberDO.setRoleType(RoleType.ROLE_ADMIN.getRoleType());
@@ -67,9 +66,9 @@ public class LoginController {
 //        return new ModelAndView(new RedirectView("/login/index"));
 //    }
 
-    @GetMapping(value = "/unregister")
+    @GetMapping(value = "/login/unregister")
     ModelAndView unregister(String id, String password) {
-        memberRepository.deleteMember(id);
-        return new ModelAndView(new RedirectView("/login/index"));
+        memberService.deleteMember(id);
+        return new ModelAndView(new RedirectView("/login"));
     }
 }

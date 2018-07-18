@@ -1,27 +1,20 @@
 package com.example.member;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Repository;
-import org.springframework.util.ObjectUtils;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
+import org.springframework.transaction.annotation.Transactional;
 
-@Repository
-public class MemberRepository {
-    @Autowired
-    MemberDAO memberDAO;
+public interface MemberRepository extends JpaRepository<Member, Integer> {
+    @Query(value = "SELECT * FROM member m WHERE m.user_id = :userId", nativeQuery = true)
+    Member selectByUserId(@Param("userId") String userId);
 
-    public void createMember(MemberDO memberDO) {
-        memberDAO.save(memberDO);
-    }
+    @Query(value = "SELECT * FROM member m WHERE m.email = :email", nativeQuery = true)
+    Member selectByEmail(@Param("email") String email);
 
-    public void deleteMember(String userId) {
-        memberDAO.deleteByUserId(userId);
-    }
-
-    public MemberDO selectMemberByUserId(String userId) {
-        return memberDAO.selectByUserId(userId);
-    }
-
-    public boolean isMember(String id) {
-        return !ObjectUtils.isEmpty(memberDAO.selectByUserId(id));
-    }
+    @Modifying
+    @Transactional
+    @Query(value = "DELETE FROM member m WHERE m.user_id = :userId", nativeQuery = true)
+    int deleteByUserId(@Param("userId") String userId);
 }

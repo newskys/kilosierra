@@ -27,14 +27,13 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http.authorizeRequests()
             .antMatchers("/home/*").authenticated()
             .antMatchers("/**").permitAll()
-//                ;
             .and()
             .formLogin()
-            .loginPage("/login/index")
-            .loginProcessingUrl("/login/index")
+            .loginPage("/login")
+            .loginProcessingUrl("/login")
             .defaultSuccessUrl("/home/list")
             .successHandler(successHandler())
-            .failureUrl("/login/index")
+            .failureUrl("/login")
             .and()
             .logout();
     }

@@ -1,6 +1,6 @@
 package com.example.config;
 
-import com.example.member.MemberRepository;
+import com.example.member.MemberService;
 import com.example.member.SecurityMember;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -14,12 +14,12 @@ import java.util.Optional;
 @Service
 public class CustomUserDetailsService implements UserDetailsService {
     @Autowired
-    MemberRepository memberRepository;
+    MemberService memberService;
 
     @Override
     public UserDetails loadUserByUsername(String userId) throws UsernameNotFoundException {
         return
-                Optional.ofNullable(memberRepository.selectMemberByUserId(userId))
+                Optional.ofNullable(memberService.selectMemberByUserId(userId))
                         .filter(Objects::nonNull)
                         .map(SecurityMember::new).get();
     }
