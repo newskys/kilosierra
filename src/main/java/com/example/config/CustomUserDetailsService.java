@@ -17,9 +17,9 @@ public class CustomUserDetailsService implements UserDetailsService {
     MemberService memberService;
 
     @Override
-    public UserDetails loadUserByUsername(String userId) throws UsernameNotFoundException {
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         return
-                Optional.ofNullable(memberService.selectMemberByUserId(userId))
+                Optional.ofNullable(memberService.selectMemberByUserId(username))
                         .filter(Objects::nonNull)
                         .map(SecurityMember::new).get();
     }

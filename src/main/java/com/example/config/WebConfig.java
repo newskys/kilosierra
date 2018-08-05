@@ -1,20 +1,28 @@
 package com.example.config;
 
-import com.example.interceptor.CertificationInterceptor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
+import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 @Configuration
 public class WebConfig implements WebMvcConfigurer {
-    @Autowired
-    CertificationInterceptor certificationInterceptor;
+//    @Autowired
+//    CertificationInterceptor certificationInterceptor;
+//
+//    @Override
+//    public void addInterceptors(InterceptorRegistry registry) {
+//        registry.addInterceptor(certificationInterceptor)
+//                .addPathPatterns("/**/*").excludePathPatterns("/login/*");
+//    }
 
     @Override
-    public void addInterceptors(InterceptorRegistry registry) {
-        registry.addInterceptor(certificationInterceptor)
-                .addPathPatterns("/**/*").excludePathPatterns("/login/*");
+    public void addCorsMappings(CorsRegistry registry) {
+        registry.addMapping("/**")
+                .allowedOrigins("*")
+//                .allowedMethods("OPTIONS", "POST", "GET", "PUT", "DELETE")
+//                .allowedHeaders("header1", "header2", "header3")
+//                .exposedHeaders("header1", "header2")
+                .allowCredentials(false).maxAge(3600);
     }
 
 }
