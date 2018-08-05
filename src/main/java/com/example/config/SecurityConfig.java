@@ -10,6 +10,7 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.web.cors.CorsUtils;
 
 @Configuration
 @EnableWebSecurity
@@ -28,19 +29,28 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 //                .and()
 //                .logout()
 //                .permitAll();
-        http
-                .csrf().disable()
-                .authorizeRequests()
-                .antMatchers("/home/*").authenticated()
-                .antMatchers("/**").permitAll()
-//                .antMatchers(HttpMethod.OPTIONS, "/*").permitAll()
-//                .antMatchers("/*").hasRole("USER")
-                .and()
-                .formLogin()
-                .loginProcessingUrl("/login");
+
+//        http
+//                .csrf().disable()
+//                .authorizeRequests()
+//                .antMatchers("/home/*").authenticated()
+//                .antMatchers("/**").permitAll()
+////                .antMatchers(HttpMethod.OPTIONS, "/*").permitAll()
+////                .antMatchers("/*").hasRole("USER")
 //                .and()
-//                .logout()
-//                .permitAll();
+//                .formLogin()
+//                .loginProcessingUrl("/login");
+////                .and()
+////                .logout()
+////                .permitAll();
+
+        http.authorizeRequests()
+                .requestMatchers(CorsUtils::isPreFlightRequest).permitAll()
+            /* 중략 */
+                .anyRequest().authenticated().and()
+                .formLogin()
+                .loginProcessingUrl("http://localhost:3000/login").and()
+                .cors().and();
     }
 
     @Bean
